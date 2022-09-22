@@ -49,6 +49,28 @@ set(SHADERS
     ortho.frag
     rot3.frag
     inverseSF.frag
+    asphere.frag
+    abox3.frag
+    dbox2.frag
+    dbox3.frag
+    dcirclesegment2.frag
+    dspiral.frag
+    dhexagonpattern.frag
+    tline2.frag
+    dline2.frag
+    tline3.frag
+    dline3.frag
+    dregularpolygon.frag
+    dstar.frag
+    xspline3.frag
+    dspline3.frag
+    nspline3.frag
+    dtspline3.frag
+    xspline2.frag
+    dspline2.frag
+    nspline2.frag
+    dtspline2.frag
+    zextrude.frag
 )
 
 foreach(SHADER ${SHADERS})
