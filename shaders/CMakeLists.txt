@@ -19,6 +19,21 @@ set(GLSL_VERSIONS
 
 set(SHADERS
     quadratic_zeros.frag
+    cubic_zeros.frag
+    quartic_zeros.frag
+    hash11.frag
+    hash12.frag
+    hash13.frag
+    hash21.frag
+    hash22.frag
+    hash23.frag
+    hash31.frag
+    hash32.frag
+    hash33.frag
+    hash41.frag
+    hash42.frag
+    hash43.frag
+    hash44.frag
 )
 
 foreach(SHADER ${SHADERS})

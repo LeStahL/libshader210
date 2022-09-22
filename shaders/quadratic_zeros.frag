@@ -1,3 +1,4 @@
+// Determine zeros of k.x*x^2+k.y*x+k.z
 vec2 quadratic_zeros(vec3 k)
 {
     if(k.x == 0.) return -k.z/k.y*c.xx;
