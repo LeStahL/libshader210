@@ -1,5 +1,7 @@
 #version ${VERSION}
 
+${PRECISION_QUALIFIER}
+
 ${SHADER_SOURCE}
 
 void main() {}

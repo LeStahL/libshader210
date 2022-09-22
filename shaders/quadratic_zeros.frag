@@ -1,3 +1,5 @@
+const vec3 c = vec3(1.,0.,-1.);
+
 // Determine zeros of k.x*x^2+k.y*x+k.z
 vec2 quadratic_zeros(vec3 k)
 {

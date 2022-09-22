@@ -75,14 +75,15 @@ static const PIXELFORMATDESCRIPTOR pfd = {
 int main(int argc, char **args) {
     assert(argc == 2);
 
-    FILE *f = fopen(args[1], "rt");
+    FILE *f = fopen(args[1], "rb");
     assert(f);
     fseek(f, 0, SEEK_END);
     size_t fsize = ftell(f);
     fseek(f, 0, SEEK_SET);
     char *fdata = (char *)malloc(fsize + 1);
     fread(fdata, 1, fsize, f);
-    fdata[fsize] = 0;
+    fdata[fsize] = '\0';
+    fclose(f);
 
     HWND hWnd = CreateWindowExA(0, (char*)0xc019, 0, WS_POPUP|WS_VISIBLE|WS_MAXIMIZE, 0, 0, 0, 0, 0, 0, 0, 0);
     HDC hDC = GetDC(hWnd);

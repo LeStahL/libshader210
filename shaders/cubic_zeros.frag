@@ -1,3 +1,8 @@
+const vec3 c = vec3(1.,0.,-1.);
+const float pi = 3.14159;
+
+vec2 quadratic_zeros(vec3 p);
+
 // Determine zeros of k.x*x^3+k.y*x^2+k.z*x+k.w
 vec3 cubic_zeros(vec4 k)
 {
