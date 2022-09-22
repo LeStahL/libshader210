@@ -1,0 +1,3 @@
+[submodule "external/cmake-find-or-download"]
+	path = external/cmake-find-or-download
+	url = https://github.com/lestahl/cmake-find-or-download.git
