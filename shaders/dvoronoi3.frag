@@ -1,6 +1,8 @@
 const vec3 c = vec3(1.,0.,-1.);
 
+//[
 vec3 hash33(vec3 p);
+//]
 
 // 3D voronoi
 vec4 dvoronoi3(vec3 x)

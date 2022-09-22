@@ -1,6 +1,8 @@
 const vec3 c = vec3(1.,0.,-1.);
 
+//[
 float hash12(vec2 p);
+//]
 
 // Low-Frequency noise (value-type)
 float lfnoise(vec2 t)

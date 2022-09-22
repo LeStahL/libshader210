@@ -1,6 +1,9 @@
 const vec3 c = vec3(1.,0.,-1.);
+
+//[
 float hash12(vec2 p);
 float blendPolynomial1(float a, float b, float k);
+//]
 
 // Smooth 2D voronoi
 vec3 dsmoothvoronoi2(vec2 x, float k)

@@ -1,4 +1,7 @@
+
+//[
 float lfnoise(vec2 o);
+//]
 
 // Multi-frequency fractal noise stack
 float mfnoise(vec2 x, float d, float b, float e)

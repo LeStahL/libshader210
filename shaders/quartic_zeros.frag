@@ -1,5 +1,8 @@
+
+//[
 vec3 cubic_zeros(vec4 k);
 vec2 quadratic_zeros(vec3 k);
+//]
 
 // Determine zeros of a*x^4+b*x^3+c*x^2+d*x+e
 vec4 quartic_zeros(float a, float b, float cc, float d, float e) {
