@@ -24,3 +24,7 @@ add_executable(compile
     compile.c
 )
 target_link_libraries(compile PUBLIC OpenGL::GL)
+
+enable_testing()
+
+add_subdirectory(shaders)

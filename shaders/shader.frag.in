@@ -1,0 +1,5 @@
+#version ${VERSION}
+
+${SHADER_SOURCE}
+
+void main() {}
