@@ -34,6 +34,12 @@ set(SHADERS
     hash42.frag
     hash43.frag
     hash44.frag
+    blendExp.frag
+    blendPolynomial.frag
+    blendPolynomial1.frag
+    blendPolynomial2.frag
+    blendPower.frag
+    dsmoothvoronoi2.frag
 )
 
 foreach(SHADER ${SHADERS})
