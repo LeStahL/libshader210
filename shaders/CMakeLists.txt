@@ -71,6 +71,10 @@ set(SHADERS
     nspline2.frag
     dtspline2.frag
     zextrude.frag
+    pcg.frag
+    pcg2d.frag
+    pcg3d.frag
+    pcg4d.frag
 )
 
 foreach(SHADER ${SHADERS})
