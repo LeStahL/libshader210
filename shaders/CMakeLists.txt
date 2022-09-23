@@ -1,23 +1,23 @@
-set(GLSL_VERSIONS
-    # "110"
-    # "120"
-    # "130"
-    # "140"
-    # "150"
-    "300 es"
-    # "310 es"
-    # "320 es"
-    # "330"
-    # "400"
-    # "410"
-    # "420"
-    # "430"
-    # "440"
-    "450"
-    # "460"
-)
 
 function(add_shader_tests)
+    set(GLSL_VERSIONS
+        # "110"
+        # "120"
+        # "130"
+        # "140"
+        # "150"
+        "300 es"
+        # "310 es"
+        # "320 es"
+        # "330"
+        # "400"
+        # "410"
+        # "420"
+        # "430"
+        # "440"
+        "450"
+        # "460"
+    )
     foreach(SHADER ${ARGV})
         get_filename_component(SHADER_BASENAME ${SHADER} NAME_WE)
         foreach(VERSION ${GLSL_VERSIONS})
@@ -35,7 +35,6 @@ function(add_shader_tests)
             configure_file(shader.frag.in ${CMAKE_CURRENT_BINARY_DIR}/${VERSIONED_SHADER_FILENAME})
             add_test(NAME glslang-validate-${VERSIONED_SHADER_FILENAME} COMMAND ${GLSLANG_VALIDATOR} ${CMAKE_CURRENT_BINARY_DIR}/${VERSIONED_SHADER_FILENAME})
             add_test(NAME c-validate-${VERSIONED_SHADER_FILENAME} COMMAND compile ${CMAKE_CURRENT_BINARY_DIR}/${VERSIONED_SHADER_FILENAME})
-
             if(${VERSION} MATCHES "es")
             else()
                 message(STATUS "Minifying ${VERSIONED_SHADER_FILENAME}...")
@@ -47,7 +46,6 @@ function(add_shader_tests)
     endforeach(SHADER)
 endfunction()
 
-if(NOT SHADER210_DEFAULTS_OFF)
 set(SHADERS
     quadratic_zeros.frag
     cubic_zeros.frag
@@ -107,6 +105,7 @@ set(SHADERS
     pcg3d.frag
     pcg4d.frag
 )
-endif()
 
-add_shader_tests(${SHADERS})
+if(NOT SHADER210_DEFAULTS_OFF)
+    add_shader_tests(${SHADERS})
+endif()
