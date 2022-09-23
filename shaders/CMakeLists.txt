@@ -1,4 +1,5 @@
 set(GLSL_VERSIONS
+    ${GLSL_VERSIONS}
     # "110"
     # "120"
     # "130"
@@ -18,6 +19,7 @@ set(GLSL_VERSIONS
 )
 
 set(SHADERS
+    ${SHADERS}
     quadratic_zeros.frag
     cubic_zeros.frag
     quartic_zeros.frag
