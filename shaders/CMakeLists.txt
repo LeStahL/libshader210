@@ -18,6 +18,7 @@ set(GLSL_VERSIONS
     # "460"
 )
 
+if(NOT SHADER210_DEFAULTS_OFF)
 set(SHADERS
     ${SHADERS}
     quadratic_zeros.frag
@@ -78,6 +79,7 @@ set(SHADERS
     pcg3d.frag
     pcg4d.frag
 )
+endif()
 
 foreach(SHADER ${SHADERS})
     get_filename_component(SHADER_BASENAME ${SHADER} NAME_WE)

@@ -16,9 +16,11 @@ find_package(OpenGL REQUIRED)
 # glext.h and khrplatform.h
 find_or_download_if_not_present(GLEXT glext.h "https://www.khronos.org/registry/OpenGL/api/GL/glext.h" ./)
 find_or_download_if_not_present(KHRPLATFORM khrplatform.h "https://www.khronos.org/registry/EGL/api/KHR/khrplatform.h" ./)
-file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/downloads/KHR")
-file(COPY "${CMAKE_CURRENT_BINARY_DIR}/downloads/khrplatform.h" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/downloads/KHR")
-include_directories("${CMAKE_CURRENT_BINARY_DIR}/downloads")
+if(NOT SHADER210_ABOVE)
+    file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/downloads/KHR")
+    file(COPY "${CMAKE_CURRENT_BINARY_DIR}/downloads/khrplatform.h" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/downloads/KHR")
+    include_directories("${CMAKE_CURRENT_BINARY_DIR}/downloads")
+endif()
 
 add_executable(compile
     compile.c
