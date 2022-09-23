@@ -1,5 +1,4 @@
 set(GLSL_VERSIONS
-    ${GLSL_VERSIONS}
     # "110"
     # "120"
     # "130"
@@ -18,9 +17,38 @@ set(GLSL_VERSIONS
     # "460"
 )
 
+function(add_shader_tests)
+    foreach(SHADER ${ARGV})
+        get_filename_component(SHADER_BASENAME ${SHADER} NAME_WE)
+        foreach(VERSION ${GLSL_VERSIONS})
+            set(VERSIONED_SHADER_FILENAME "${SHADER_BASENAME}-${VERSION}.frag")
+            set(MINIFIED_VERSIONED_SHADER_FILENAME "${SHADER_BASENAME}-${VERSION}-minified.frag")
+            string(REPLACE " " "-" VERSIONED_SHADER_FILENAME ${VERSIONED_SHADER_FILENAME})
+            string(REPLACE " " "-" MINIFIED_VERSIONED_SHADER_FILENAME ${MINIFIED_VERSIONED_SHADER_FILENAME})
+            file(READ ${SHADER} SHADER_SOURCE)
+            if(${VERSION} MATCHES "300 es")
+                set(PRECISION_QUALIFIER "precision highp float;\n")
+            else()
+                set(PRECISION_QUALIFIER)
+            endif()
+
+            configure_file(shader.frag.in ${CMAKE_CURRENT_BINARY_DIR}/${VERSIONED_SHADER_FILENAME})
+            add_test(NAME glslang-validate-${VERSIONED_SHADER_FILENAME} COMMAND ${GLSLANG_VALIDATOR} ${CMAKE_CURRENT_BINARY_DIR}/${VERSIONED_SHADER_FILENAME})
+            add_test(NAME c-validate-${VERSIONED_SHADER_FILENAME} COMMAND compile ${CMAKE_CURRENT_BINARY_DIR}/${VERSIONED_SHADER_FILENAME})
+
+            if(${VERSION} MATCHES "es")
+            else()
+                message(STATUS "Minifying ${VERSIONED_SHADER_FILENAME}...")
+                execute_process(COMMAND ${SHADER_MINIFIER} --preserve-all-globals --format text ${CMAKE_CURRENT_BINARY_DIR}/${VERSIONED_SHADER_FILENAME} -o ${CMAKE_CURRENT_BINARY_DIR}/${MINIFIED_VERSIONED_SHADER_FILENAME})
+                add_test(NAME glslang-validate-${MINIFIED_VERSIONED_SHADER_FILENAME} COMMAND ${GLSLANG_VALIDATOR} ${CMAKE_CURRENT_BINARY_DIR}/${MINIFIED_VERSIONED_SHADER_FILENAME})
+                add_test(NAME c-validate-${MINIFIED_VERSIONED_SHADER_FILENAME} COMMAND compile ${CMAKE_CURRENT_BINARY_DIR}/${MINIFIED_VERSIONED_SHADER_FILENAME})
+            endif()
+        endforeach(VERSION)
+    endforeach(SHADER)
+endfunction()
+
 if(NOT SHADER210_DEFAULTS_OFF)
 set(SHADERS
-    ${SHADERS}
     quadratic_zeros.frag
     cubic_zeros.frag
     quartic_zeros.frag
@@ -81,30 +109,4 @@ set(SHADERS
 )
 endif()
 
-foreach(SHADER ${SHADERS})
-    get_filename_component(SHADER_BASENAME ${SHADER} NAME_WE)
-    foreach(VERSION ${GLSL_VERSIONS})
-        set(VERSIONED_SHADER_FILENAME "${SHADER_BASENAME}-${VERSION}.frag")
-        set(MINIFIED_VERSIONED_SHADER_FILENAME "${SHADER_BASENAME}-${VERSION}-minified.frag")
-        string(REPLACE " " "-" VERSIONED_SHADER_FILENAME ${VERSIONED_SHADER_FILENAME})
-        string(REPLACE " " "-" MINIFIED_VERSIONED_SHADER_FILENAME ${MINIFIED_VERSIONED_SHADER_FILENAME})
-        file(READ ${SHADER} SHADER_SOURCE)
-        if(${VERSION} MATCHES "300 es")
-            set(PRECISION_QUALIFIER "precision highp float;\n")
-        else()
-            set(PRECISION_QUALIFIER)
-        endif()
-
-        configure_file(shader.frag.in ${CMAKE_CURRENT_BINARY_DIR}/${VERSIONED_SHADER_FILENAME})
-        add_test(NAME glslang-validate-${VERSIONED_SHADER_FILENAME} COMMAND ${GLSLANG_VALIDATOR} ${CMAKE_CURRENT_BINARY_DIR}/${VERSIONED_SHADER_FILENAME})
-        add_test(NAME c-validate-${VERSIONED_SHADER_FILENAME} COMMAND compile ${CMAKE_CURRENT_BINARY_DIR}/${VERSIONED_SHADER_FILENAME})
-
-        if(${VERSION} MATCHES "es")
-        else()
-            message(STATUS "Minifying ${VERSIONED_SHADER_FILENAME}...")
-            execute_process(COMMAND ${SHADER_MINIFIER} --preserve-all-globals --format text ${CMAKE_CURRENT_BINARY_DIR}/${VERSIONED_SHADER_FILENAME} -o ${CMAKE_CURRENT_BINARY_DIR}/${MINIFIED_VERSIONED_SHADER_FILENAME})
-            add_test(NAME glslang-validate-${MINIFIED_VERSIONED_SHADER_FILENAME} COMMAND ${GLSLANG_VALIDATOR} ${CMAKE_CURRENT_BINARY_DIR}/${MINIFIED_VERSIONED_SHADER_FILENAME})
-            add_test(NAME c-validate-${MINIFIED_VERSIONED_SHADER_FILENAME} COMMAND compile ${CMAKE_CURRENT_BINARY_DIR}/${MINIFIED_VERSIONED_SHADER_FILENAME})
-        endif()
-    endforeach(VERSION)
-endforeach(SHADER)
+add_shader_tests(${SHADERS})
