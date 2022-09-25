@@ -98,7 +98,7 @@ int main(int argc, char **args) {
 	if (!success)
 	{
 		GLsizei infoLogLength = 0;
-    	((PFNGLGETSHADERIVPROC)wglGetProcAddress("glGetProgramiv"))(program, GL_INFO_LOG_LENGTH, &infoLogLength);
+    	((PFNGLGETPROGRAMIVPROC)wglGetProcAddress("glGetProgramiv"))(program, GL_INFO_LOG_LENGTH, &infoLogLength);
 		char *infoLog = (char *) malloc(infoLogLength + 2);
 		((PFNGLGETPROGRAMINFOLOGPROC)wglGetProcAddress("glGetProgramInfoLog"))(program, infoLogLength, 0, infoLog);
         fprintf(stderr, "Error in %s:\n%s\n", args[1], infoLog);
